@@ -17,6 +17,8 @@
         // var index = streams.home.length - 1; // gets the number of tweets to display on homepage
 
         var loadTweets = function(prevLength, currentLength) {
+          var $tweetGroup = $('<div></div>'); 
+          $tweetGroup.prependTo($tweetsdiv);
           var index = currentLength - 1;  
           while(index >= prevLength){
             var tweet = streams.home[index]; // an individual tweet object
@@ -28,7 +30,7 @@
           
             var $tweet = $('<div></div>'); // creates a div element for the tweet
             $tweet.text(time + ' @' + tweet.user + ': ' + tweet.message); // Creates the text to inside the div
-            $tweet.prependTo($tweetsdiv); // adds the div element into the body
+            $tweet.appendTo($tweetGroup); // adds the div element into the body
             index -= 1;
           }
         };
