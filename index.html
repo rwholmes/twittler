@@ -6,32 +6,36 @@
   </head>
   <body>
     <button type="button">Load New Tweets</button>
+    <div id="tweets">
+    </div>
     <script>
 
       $(document).ready(function(){
         var $body = $('body'); // creates a variable for the body element
+        var $tweetsdiv = $('div#tweets');
         // $body.html(''); // sets the content of body to be empty
         // var index = streams.home.length - 1; // gets the number of tweets to display on homepage
 
-        var loadTweets = function(oldestInd, newestInd) {
-          var index = newestInd - 1;  
-          while(index >= oldestInd){
+        var loadTweets = function(prevLength, currentLength) {
+          var index = currentLength - 1;  
+          while(index >= prevLength){
             var tweet = streams.home[index]; // an individual tweet object
           
             // time code I added
             var timeArray = tweet.created_at.toString().split(' ');
             var date = timeArray.slice(1,3);
-            var time = timeArray[4].split(':')[0] + ':' + timeArray[4].split(':')[1] + ':' + timeArray[4].split(':')[2];
+            var time = timeArray[4].split(':')[0] + ':' + timeArray[4].split(':')[1] + ':' + timeArray[4].split(':')[2] + ':' + timeArray[4].split(':')[3];
           
             var $tweet = $('<div></div>'); // creates a div element for the tweet
             $tweet.text(time + ' @' + tweet.user + ': ' + tweet.message); // Creates the text to inside the div
-            $tweet.appendTo($body); // adds the div element into the body
+            $tweet.prependTo($tweetsdiv); // adds the div element into the body
             index -= 1;
-          }  
+          }
         };
         loadTweets(0,streams.home.length);
         $('button').click(function() {
-          loadTweets();
+          var currentTweets = $('div').length;
+          loadTweets(currentTweets, streams.home.length);
         });
       });
 
