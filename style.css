@@ -1,0 +1,24 @@
+
+#container {
+	width: 884px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#left {
+	width:300px;
+	border: 1px solid black;
+	float: left;
+	padding: 12px;
+}
+#right {
+	width: 520px;
+	border: 1px solid black;
+	float: right;
+	padding: 12px;
+}
+h3 {
+	margin: 0px;
+}
+input {
+	width: 290px;
+}
