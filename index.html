@@ -9,12 +9,18 @@
     <div id="container">
       <h1>Twittler</h1>
       <div id="left">
-        <h3>My Username</h3>
+        <div class="row">
+          <h3>My Username</h3>
+        </div>
         <input name="user-tweet" value="Compose New Tweet...">
       </div>
       <div id="right">
-        <h3>Tweets</h3>
-        <button type="button">Load New Tweets</button>
+        <div class="row">
+          <h3>Tweets</h3>
+        </div>
+        <div class="row button">
+          <a href="#" id="tweet-load" class="button">Load Newest Tweets</a>
+        </div>
         <div id="tweets">
         </div>
       </div>
@@ -46,9 +52,10 @@
           }
         };
         loadTweets(0,streams.home.length); // Load the inital tweets when the page is loaded
-        $('button').click(function() {
+        $('a#tweet-load').click(function(event) {
           var currentTweets = $('div.tweet').length;
           loadTweets(currentTweets, streams.home.length);
+          event.preventDefault();
         });
       });
 
