@@ -18,7 +18,7 @@
       </div>
       <div id="right">
         <div class="row">
-          <h3>Tweets</h3>
+          <h3 class="timeline-title">Tweets</h3>
         </div>
         <div class="row button">
           <a href="#" id="tweet-load" class="button">Load Newest Tweets</a>
@@ -53,10 +53,10 @@
             var $tweetTime = $('<div class="tweet-time"></div>'); // create a div for the timestamp
             var $tweetTimeAbbr = $('<abbr class="timeago">Hello</abbr>'); // create the abbr for the plugin to convert
             $tweetTime.append($tweetTimeAbbr.attr('title', newtime.toISOString()));
-            var $userLink = $('<a href="#">@' + tweet.user + '</a>');
-            $userLink.attr('href', tweet.user);
-            $tweetMessage.text(': ' + tweet.message); // Creates the message text inside the div
-            $tweetMessage.prepend($userLink);
+            // var $userLink = $('<a class="user-profile" href="#">@' + tweet.user + '</a>');
+            // $userLink.attr('href', tweet.user);
+            $tweetMessage.text('@' + tweet.user + ': ' + tweet.message); // Creates the message text inside the div
+            // $tweetMessage.prepend($userLink);
             $tweet.append($tweetMessage, $tweetTime);
             $tweet.appendTo($tweetGroup); // adds the tweet message div element into the body
             jQuery("abbr.timeago").timeago(); // call the timeago plugin to convert timestamps
@@ -69,6 +69,7 @@
           loadTweets(currentTweets, streams.home.length);
           event.preventDefault();
         });
+        // User tweeting functionality
         $('a#send-tweet').click(function(event) {
           var currentTweets = $('div.tweet').length;
           var myTweet = {
@@ -81,6 +82,12 @@
           streams.home.push(myTweet);
           loadTweets(currentTweets, streams.home.length);
           event.preventDefault();
+        });
+        // View a user's profile
+        $('a.user-profile').click(function(event) {
+          $('h3.timeline-title').text(this.text + "'s Timeline");
+          $('div.tweet').remove();
+          loadTweets(0, streams.users.shawndrost.length, 'shawndrost');
         });
       });
       
