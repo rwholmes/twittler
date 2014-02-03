@@ -49,11 +49,14 @@
             var newtime = new Date( tweet.created_at );
 
             var $tweet = $('<div class="tweet cf"></div>'); // creates a div element for the tweet
-            var $tweetMessage = $('<div class="tweet-message"></div>') // creates a div for the message
-            var $tweetTime = $('<div class="tweet-time"></div>') // create a div for the timestamp
+            var $tweetMessage = $('<div class="tweet-message"></div>'); // creates a div for the message
+            var $tweetTime = $('<div class="tweet-time"></div>'); // create a div for the timestamp
             var $tweetTimeAbbr = $('<abbr class="timeago">Hello</abbr>'); // create the abbr for the plugin to convert
             $tweetTime.append($tweetTimeAbbr.attr('title', newtime.toISOString()));
-            $tweetMessage.text(' @' + tweet.user + ': ' + tweet.message); // Creates the message text inside the div
+            var $userLink = $('<a href="#">@' + tweet.user + '</a>');
+            $userLink.attr('href', tweet.user);
+            $tweetMessage.text(': ' + tweet.message); // Creates the message text inside the div
+            $tweetMessage.prepend($userLink);
             $tweet.append($tweetMessage, $tweetTime);
             $tweet.appendTo($tweetGroup); // adds the tweet message div element into the body
             jQuery("abbr.timeago").timeago(); // call the timeago plugin to convert timestamps
