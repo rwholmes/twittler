@@ -52,17 +52,20 @@ div.tweet {
 }
 div.tweet-message {
 	float: left;
-	width: 420px;
+	width: 400px;
 }
 div.tweet-time {
 	float: right;
-	width: 90px;
+	width: 110px;
 	margin-left: 10px;
 	text-align: right;
 	color: #8899a6;
 }
 h3 {
 	margin: 0px;
+}
+abbr {
+	font-size: 11px;
 }
 input {
 	width: 290px;
