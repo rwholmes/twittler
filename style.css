@@ -1,4 +1,14 @@
 
+/* ClearFix */
+.cf:before,
+.cf:after {
+ 	content:"";
+ 	display:table;
+}
+.cf:after {
+	clear:both;
+}
+/* Main Syles */
 body {
 	font-family: "Helvetica Neue",Arial,sans-serif;
 	font-size: 14px;
@@ -37,6 +47,20 @@ body {
 	padding: 6px;
 	font-size: 13px;
 }
+div.tweet {
+	width: 520px;
+}
+div.tweet-message {
+	float: left;
+	width: 420px;
+}
+div.tweet-time {
+	float: right;
+	width: 90px;
+	margin-left: 10px;
+	text-align: right;
+	color: #8899a6;
+}
 h3 {
 	margin: 0px;
 }
@@ -51,9 +75,6 @@ div.tweet {
 	border-bottom: 1px solid #e8e8e8;
 	padding: 9px 12px 9px 12px;
 }
-
-
-
 a.button {
 	position: relative;
 	width:520px;

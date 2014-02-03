@@ -6,8 +6,8 @@
     <link type="text/css" href="style.css" rel="stylesheet"/>
   </head>
   <body>
-    <div id="container">
-      <h1>Twittler</h1>
+    <div id="container" class="cf">
+      <h1 class="page-name">Twittler</h1>
       <div id="left">
         <div class="row">
           <h3>My Username</h3>
@@ -23,6 +23,7 @@
           <a href="#" id="tweet-load" class="button">Load Newest Tweets</a>
         </div>
         <div id="tweets">
+
         </div>
       </div>
     </div>
@@ -46,9 +47,14 @@
             var date = timeArray.slice(1,3);
             var time = timeArray[4].split(':')[0] + ':' + timeArray[4].split(':')[1] + ':' + timeArray[4].split(':')[2];
           
-            var $tweet = $('<div class="tweet"></div>'); // creates a div element for the tweet
-            $tweet.text(time + ' @' + tweet.user + ': ' + tweet.message); // Creates the text to inside the div
-            $tweet.appendTo($tweetGroup); // adds the div element into the body
+            var $tweet = $('<div class="tweet cf"></div>'); // creates a div element for the tweet
+            var $tweetMessage = $('<div class="tweet-message"></div>') // creates a div for the message
+            var $tweetTime = $('<div class="tweet-time"></div>') // create a div for the timestamp
+            $tweetMessage.text(' @' + tweet.user + ': ' + tweet.message); // Creates the message text inside the div
+            $tweetTime.text(time); // Add the time text to the timestamp div
+            $tweet.append($tweetMessage);
+            $tweet.append($tweetTime); // adds the timestamp div into the body
+            $tweet.appendTo($tweetGroup); // adds the tweet message div element into the body
             index -= 1;
           }
         };
