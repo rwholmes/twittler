@@ -42,20 +42,23 @@
           var index = currentLength - 1;  
           while(index >= prevLength){
             var tweet = streams.home[index]; // an individual tweet object
-          
-            // time code I added
-            var timeArray = tweet.created_at.toString().split(' ');
-            var date = timeArray.slice(1,3);
-            var time = timeArray[4].split(':')[0] + ':' + timeArray[4].split(':')[1] + ':' + timeArray[4].split(':')[2];
-          
+            
+            // Time calculations before use of timestamp plugin
+            //var timeArray = tweet.created_at.toString().split(' ');
+            // var date = timeArray.slice(1,3);
+            // var time = timeArray[4].split(':')[0] + ':' + timeArray[4].split(':')[1] + ':' + timeArray[4].split(':')[2];
+            var newtime = new Date( tweet.created_at );
+
             var $tweet = $('<div class="tweet cf"></div>'); // creates a div element for the tweet
             var $tweetMessage = $('<div class="tweet-message"></div>') // creates a div for the message
             var $tweetTime = $('<div class="tweet-time"></div>') // create a div for the timestamp
+            var $tweetTimeAbbr = $('<abbr class="timeago">Hello</abbr>'); // create the abbr for the plugin to convert
+            $tweetTimeAbbr.attr('title', newtime.toISOString());
             $tweetMessage.text(' @' + tweet.user + ': ' + tweet.message); // Creates the message text inside the div
-            $tweetTime.text(time); // Add the time text to the timestamp div
-            $tweet.append($tweetMessage);
-            $tweet.append($tweetTime); // adds the timestamp div into the body
+            $tweetTime.append($tweetTimeAbbr);
+            $tweet.append($tweetMessage, $tweetTime);
             $tweet.appendTo($tweetGroup); // adds the tweet message div element into the body
+            jQuery("abbr.timeago").timeago();
             index -= 1;
           }
         };
@@ -66,12 +69,7 @@
           event.preventDefault();
         });
       });
-
-
-
-
-
-
+      
     </script>
   </body>
 </html>
