@@ -24,7 +24,6 @@
           <a href="#" id="tweet-load" class="button">Load Newest Tweets</a>
         </div>
         <div id="tweets">
-
         </div>
       </div>
     </div>
@@ -64,6 +63,19 @@
         loadTweets(0,streams.home.length); // Load the inital tweets when the page is loaded
         $('a#tweet-load').click(function(event) {
           var currentTweets = $('div.tweet').length;
+          loadTweets(currentTweets, streams.home.length);
+          event.preventDefault();
+        });
+        $('a#send-tweet').click(function(event) {
+          var currentTweets = $('div.tweet').length;
+          var myTweet = {
+            user: 'twittleruser',
+            message: '',
+            created_at: ''
+          };
+          myTweet['message'] = $('textarea').val();
+          myTweet['created_at'] = new Date();
+          streams.home.push(myTweet);
           loadTweets(currentTweets, streams.home.length);
           event.preventDefault();
         });
