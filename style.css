@@ -25,17 +25,23 @@ body {
 }
 #left {
 	width:324px;
-	height: 176px;
-	border: 1px solid #e8e8e8;
 	float: left;
-	border-radius: 6px;
-	background-color: #f9f9f9;
 }
 #right {
 	width: 544px;
 	border: 1px solid #e8e8e8;
 	float: right;
 	border-radius: 6px;
+}
+#user-box, #user-timeline {
+	height: 176px;
+	border: 1px solid #e8e8e8;
+	border-radius: 6px;
+	background-color: #f9f9f9;
+}
+#user-timeline {
+	margin-top: 20px;
+	background-color: #fff;
 }
 #left textarea {
 	width: 290px;
@@ -63,6 +69,12 @@ div.tweet-time {
 }
 h3 {
 	margin: 0px;
+}
+h3.timeline-title {
+	float: left;
+}
+a.main-link {
+	float: right;
 }
 abbr {
 	font-size: 11px;

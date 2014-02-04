@@ -10,15 +10,25 @@
     <div id="container" class="cf">
       <h1 class="page-name">Twittler</h1>
       <div id="left">
-        <div class="row">
-          <h3>My Username</h3>
+        <div id="user-box">
+          <div class="row">
+            <h3>My Username</h3>
+          </div>
+          <textarea placeholder="Compose New Tweet..."></textarea>
+          <a href="#" id="send-tweet" class="button small">Send Tweet</a>
         </div>
-        <textarea placeholder="Compose New Tweet..."></textarea>
-        <a href="#" id="send-tweet" class="button small">Send Tweet</a>
+        <div id="user-timeline">
+          <div class="row">
+            <h3>My Timeline</h3>
+          </div>
+          <div id="mini-timeline">
+          </div>
+        </div>
       </div>
       <div id="right">
-        <div class="row">
+        <div class="row cf">
           <h3 class="timeline-title">Tweets</h3>
+          <span><a class="main-link" href="#">Back to Main Timeline</a></span>
         </div>
         <div class="row button">
           <a href="#" id="tweet-load" class="button">Load Newest Tweets</a>
@@ -35,12 +45,19 @@
         // $body.html(''); // sets the content of body to be empty
         // var index = streams.home.length - 1; // gets the number of tweets to display on homepage
 
-        var loadTweets = function(prevLength, currentLength) {
+        var loadTweets = function(user) {
+          $tweetsdiv.html('');
+          if (typeof user === 'undefined') {
+            var tweetCat = streams.home;
+          }
+          else {
+            var tweetCat = user;
+          }
           var $tweetGroup = $('<div class="tweet-group"></div>'); 
           $tweetGroup.prependTo($tweetsdiv);
-          var index = currentLength - 1;  
-          while(index >= prevLength){
-            var tweet = streams.home[index]; // an individual tweet object
+          var index = tweetCat.length - 1;  
+          while(index >= 0){
+            var tweet = tweetCat[index]; // an individual tweet object
             
             // Time calculations before use of timestamp plugin
             //var timeArray = tweet.created_at.toString().split(' ');
@@ -50,23 +67,24 @@
 
             var $tweet = $('<div class="tweet cf"></div>'); // creates a div element for the tweet
             var $tweetMessage = $('<div class="tweet-message"></div>'); // creates a div for the message
+            var $tweetUser = $('<a class="user-link" href="#"></a>'); // create anchor link for the username
             var $tweetTime = $('<div class="tweet-time"></div>'); // create a div for the timestamp
-            var $tweetTimeAbbr = $('<abbr class="timeago">Hello</abbr>'); // create the abbr for the plugin to convert
+            var $tweetTimeAbbr = $('<abbr class="timeago"></abbr>'); // create the abbr for the plugin to convert
             $tweetTime.append($tweetTimeAbbr.attr('title', newtime.toISOString()));
-            // var $userLink = $('<a class="user-profile" href="#">@' + tweet.user + '</a>');
-            // $userLink.attr('href', tweet.user);
-            $tweetMessage.text('@' + tweet.user + ': ' + tweet.message); // Creates the message text inside the div
-            // $tweetMessage.prepend($userLink);
+            $tweetUser.text('@' + tweet.user);
+            $tweetUser.attr('title', tweet.user);
+            $tweet.addClass(tweet.user);
+            $tweetMessage.append($tweetUser, ': ' + tweet.message); // Creates the message text inside the div
             $tweet.append($tweetMessage, $tweetTime);
             $tweet.appendTo($tweetGroup); // adds the tweet message div element into the body
             jQuery("abbr.timeago").timeago(); // call the timeago plugin to convert timestamps
             index -= 1;
           }
         };
-        loadTweets(0,streams.home.length); // Load the inital tweets when the page is loaded
-        $('a#tweet-load').click(function(event) {
+        loadTweets(); // Load the inital tweets when the page is loaded
+        $('a#tweet-load').on('click', function(event) {
           var currentTweets = $('div.tweet').length;
-          loadTweets(currentTweets, streams.home.length);
+          loadTweets();
           event.preventDefault();
         });
         // User tweeting functionality
@@ -80,14 +98,30 @@
           myTweet['message'] = $('textarea').val();
           myTweet['created_at'] = new Date();
           streams.home.push(myTweet);
-          loadTweets(currentTweets, streams.home.length);
+          loadTweets();
           event.preventDefault();
         });
-        // View a user's profile
-        $('a.user-profile').click(function(event) {
-          $('h3.timeline-title').text(this.text + "'s Timeline");
-          $('div.tweet').remove();
-          loadTweets(0, streams.users.shawndrost.length, 'shawndrost');
+        // View Individual Users Timelines
+        $('#tweets').on('click', '.user-link', function(event) {
+          var clickedUser;
+          if (this.title === 'sharksforcheap') {
+            clickedUser = streams.users.sharksforcheap;
+          }
+          if (this.title === 'shawndrost') {
+            clickedUser = streams.users.shawndrost;
+          }
+          if (this.title === 'mracus') {
+            clickedUser = streams.users.mracus; 
+          }
+          if (this.title === 'douglascalhoun') {
+            clickedUser = streams.users.douglascalhoun; 
+          }
+          loadTweets(clickedUser);
+          event.preventDefault();
+        });
+        $('a.main-link').click(function(event) {
+          loadTweets();
+          event.preventDefault();
         });
       });
       
